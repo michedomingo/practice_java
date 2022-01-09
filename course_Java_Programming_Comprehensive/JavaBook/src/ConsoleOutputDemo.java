@@ -4,3 +4,5 @@ public class ConsoleOutputDemo {
         System.out.println("Graphics is more fun, though.");
     }
 }
+
+// ch2_p39_pdf44
