@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class ChangeImageTransparency {
+public class ColorComponentDisplay {
     public static void main(String[] args) {
         System.out.println("White: " + Color.WHITE);
         System.out.println("Black: " + Color.BLACK);
