@@ -18,3 +18,5 @@ public class RectangleDemo {
         dk.fill(rect);
     }
 }
+
+// ch1_p26_pdf32
