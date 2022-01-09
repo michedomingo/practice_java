@@ -38,3 +38,5 @@ public class StickFigure {
         dk.draw(leg2);
     }
 }
+
+// ch3_p57_pdf62
