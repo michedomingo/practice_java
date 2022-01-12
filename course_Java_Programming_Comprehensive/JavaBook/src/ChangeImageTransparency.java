@@ -27,7 +27,7 @@ public class ChangeImageTransparency {
                 int green = pixelColor.getGreen();
                 int blue = pixelColor.getBlue();
 
-                // check if pixel is in the withe background
+                // check if pixel is in the white background
                 if (red > 240 && green > 240 && blue > 240) {
                     // make this pixel transparent by setting alpha to 0
                     int alpha = 0;
