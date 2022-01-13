@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import com.programwithjava.basic.DrawingKit;
 
-/*
+/**
  * The Lamp class defines a lamp object that can be drawn in a window.
  * Light may be turned on/off, wattage & lamp bulb diameter can be set.
  */
@@ -28,7 +28,7 @@ public class Lamp {
     // true if lamp outline is drawn (p178_pdf183)
     private boolean visible = false;
 
-    /*
+    /**
      * (p158_pdf163)
      * Constructs new Lamp, initialized diameter 10, wattage 100, lighted false.
      */
@@ -81,15 +81,14 @@ public class Lamp {
     }
 
     /**
+     * (module 02: 2.09a & 2.09b)
      * Method to get lamp wattage.
      * 
      * @return the wattage of the bulb.
      */
-    /*
-     * public int getWattage() {
-     * return wattage;
-     * }
-     */
+    public int getWattage() {
+        return wattage;
+    }
 
     /**
      * Method to change the bulb wattage to specified value
@@ -180,7 +179,7 @@ public class Lamp {
         }
     }
 
-    /* (p179_pdf184) */
+    /** (p179_pdf184) */
     public static void main(String[] args) {
         // create a window on computer screen with title 'Lamp'
         // (default size WxH: 500x500)
