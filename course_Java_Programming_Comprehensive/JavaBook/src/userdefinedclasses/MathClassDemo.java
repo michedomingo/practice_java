@@ -16,7 +16,7 @@ public class MathClassDemo {
         System.out.println(String.format("round(%.2f) = %d ", n1, +Math.round(n1)));
         System.out.println(String.format("round(%.2f) = %d ", n2, +Math.round(n2)));
 
-        // For trignometric functions, angle should be specified in radians
+        // For trigonometric functions, angle should be specified in radians
         double rad = (angle * Math.PI) / 180;
         System.out.println(String.format("sin(%d) = %.2f ", angle, +Math.sin(rad)));
         System.out.println(String.format("cos(%d) = %.2f ", angle, +Math.cos(rad)));
@@ -26,3 +26,21 @@ public class MathClassDemo {
 
 // examples of using Math class methods
 // ch5_p172_pdf177
+
+/*
+ * program output:
+ * 
+ * The larger of -85.60 and 70.40 is 70.40
+ * The smaller of -85.60 and 70.40 is -85.60
+ * The value of 70.40 raised to the power of 5 is 1729271944.97
+ * abs(-85.60) = 85.60
+ * floor(-85.60) = -86.00
+ * floor(70.40) = 70.00
+ * ceil(-85.60) = -85.00
+ * ceil(70.40) = 71.00
+ * round(-85.60) = -86
+ * round(70.40) = 70
+ * sin(45) = 0.71
+ * cos(45) = 0.71
+ * tan(45) = 1.00
+ */
