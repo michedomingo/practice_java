@@ -13,7 +13,7 @@ public class Lamp {
     // diameter of lamp globe (p134_pdf139)
     private double diameter;
 
-    // wattage of bulb p135_pdf140
+    // wattage of bulb (p135_pdf140)
     private int wattage;
 
     // true if lamp is on
@@ -22,11 +22,11 @@ public class Lamp {
     // number of lamp objects created (p168_pdf173)
     private static int numberOfObjects;
 
-    // lamp globe
-    // private Ellipse2D.Double circle;
+    // lamp globe (p178_pdf183)
+    private Ellipse2D.Double circle;
 
-    // true if lamp outline is drawn
-    // private boolean visible = false;
+    // true if lamp outline is drawn (p178_pdf183)
+    private boolean visible = false;
 
     /*
      * (p158_pdf163)
@@ -124,59 +124,75 @@ public class Lamp {
     }
 
     /**
-     * Method to draw a simple outline of a lamp as a globe suspended on a wire.
+     * (p178_pdf183)
      * 
-     * @param x          the x-coordinate position of the lamp globe.
-     * @param y          the y-coordinate of the lamp globe.
-     * @param myGraphics the Graphics context to draw the shape.
+     * Method draws simple outline of lamp globe, shape of circle at (x, y)
+     * 
+     * @param x          the x-coordinate position of the lamp globe
+     * @param y          the y-coordinate of the lamp globe
+     * @param myGraphics the Graphics context to draw the desired shapes
      */
-    /*
-     * public void drawOutline(int x, int y, Graphics2D myGraphics) {
-     * int w = 20, z = 50;
-     * visible = true;
-     * myGraphics.setPaint(Color.black);
-     * circle = new Ellipse2D.Double(x, y, diameter * w, diameter * w);
-     * myGraphics.draw(circle);
-     * Line2D line = new Line2D.Double(x + diameter * w / 2, y, x + diameter * w /
-     * 2, y - z);
-     * myGraphics.draw(line);
-     * }
-     */
+    public void drawOutline(int x, int y, Graphics2D myGraphics) {
+        int w = 20, z = 50;
+        // sets value of (private boolean visable) field to true
+        visible = true;
+        myGraphics.setPaint(Color.black);
+        circle = new Ellipse2D.Double(x, y, diameter * w, diameter * w);
+        myGraphics.draw(circle);
+        Line2D line = new Line2D.Double(x + diameter * w / 2, y, x + diameter * w /
+                2, y - z);
+        myGraphics.draw(line);
+    }
 
     /**
+     * (p179_pdf184)
      * Method to light the lamp by coloring it yellow.
+     * Graphics2D instance calls fill method to color circle instance field yellow.
      * 
      * @param myGraphics the Graphics context to color the shape.
      */
-    /*
-     * public void turnOn(Graphics2D myGraphics) {
-     * lighted = true;
-     * if (visible) {
-     * myGraphics.setPaint(Color.yellow);
-     * myGraphics.fill(circle);
-     * }
-     * }
-     */
+    public void turnOn(Graphics2D myGraphics) {
+        lighted = true;
+
+        // displays graphics only if lamp outline has been drawn
+        // i.e. visable is set to true
+        if (visible) {
+            myGraphics.setPaint(Color.yellow);
+            myGraphics.fill(circle);
+        }
+    }
 
     /**
+     * (p179_pdf184)
      * Method to turn off the lamp by coloring it gray.
+     * Graphics2D instance calls fill method to color circle instance field gray.
      * 
      * @param myGraphics the Graphics context to color the shape.
      */
-    /*
-     * public void turnOff(Graphics2D myGraphics) {
-     * lighted = false;
-     * if (visible) {
-     * myGraphics.setPaint(Color.gray);
-     * myGraphics.fill(circle);
-     * }
-     * }
-     */
+    public void turnOff(Graphics2D myGraphics) {
+        lighted = false;
 
+        // displays graphics only if lamp outline has been drawn
+        // i.e. visable is set to true
+        if (visible) {
+            myGraphics.setPaint(Color.gray);
+            myGraphics.fill(circle);
+        }
+    }
+
+    /* (p179_pdf184) */
     public static void main(String[] args) {
+        // create a window on computer screen with title 'Lamp'
+        // (default size WxH: 500x500)
         DrawingKit dk = new DrawingKit("Lamp");
+
+        // Graphics2D context is obtained from DrawingKit using the getGraphics method
         Graphics2D myGraphics = dk.getGraphics();
+
+        // a Lamp object called lamp 1 is created
         Lamp lamp1 = new Lamp(6.2f, 20, false);
+
+        // context is passed, necessary so all drawing is done inside same window
         lamp1.drawOutline(180, 180, myGraphics);
         lamp1.turnOn(myGraphics);
     }
