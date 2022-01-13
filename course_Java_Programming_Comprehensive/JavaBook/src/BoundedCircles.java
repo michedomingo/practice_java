@@ -53,8 +53,12 @@ public class BoundedCircles {
     }
 
     public static void main(String[] args) {
+        // create a window on computer screen using DrawingKit contructor
+        // title on the window is 'Bounded Circles'
         DrawingKit mydrawingkit = new DrawingKit("Bounded Circles");
+        // create an instance of class BoundedCircles
         BoundedCircles circles = new BoundedCircles();
+        // output circles instance on mydrawingkit window instance on screen
         circles.generate(mydrawingkit);
     }
 }
