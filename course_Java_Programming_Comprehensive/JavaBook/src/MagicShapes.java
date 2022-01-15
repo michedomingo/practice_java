@@ -11,6 +11,7 @@ public class MagicShapes {
         DrawingKit dk = new DrawingKit("Magic Shapes");
 
         Random rand = new Random();
+        // magicShape gets a random integer value of 0, 1, 2 or 3
         int magicShape = rand.nextInt(4);
         // magicColor gets a random integer value of 0, 1, or 2
         int magicColor = rand.nextInt(3);
