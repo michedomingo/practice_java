@@ -12,14 +12,14 @@ public class ConcentricCircles {
     }
 
     // create circle at same center
-    void drawCircle(DrawingKit dk, float radius) {
+    public void drawCircle(DrawingKit dk, float rad) {
         float x = 225, y = 225;
-        Ellipse2D.Float circle = new Ellipse2D.Float(x - radius, y - radius, 2 * radius, 2 * radius);
+        Ellipse2D.Float circle = new Ellipse2D.Float(x - rad, y - rad, 2 * rad, 2 * rad);
         dk.draw(circle);
     }
 
     // draw set of consecutive circles with radii differ by 10
-    void generateCircles(DrawingKit dk) {
+    public void generateCircles(DrawingKit dk) {
         float radius = selectRadius();
         // System.out.println(String.format("Random radius: %.2f", radius));
         int countCircles = 0;
