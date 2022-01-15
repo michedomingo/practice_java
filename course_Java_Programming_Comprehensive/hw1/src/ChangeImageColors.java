@@ -10,7 +10,7 @@ public class ChangeImageColors {
         // draw the original picture
         dk.drawPicture(picture, 0, 50);
 
-        // modify the pixels in picture
+        // modify pixels in picture
         for (int x = 0; x < picture.getWidth(); x++) {
             for (int y = 0; y < picture.getHeight(); y++) {
                 // get red, green, & blue components of pixel at (x, y)
