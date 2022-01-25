@@ -6,23 +6,24 @@ public class SavingsAccount extends Account {
     private int day;
     private int month;
     private int year;
-    private BigDecimal savingsBalance;
+    private BigDecimal savingsBalance = balance;
 
-    // constructor 1
+    // constructor new SavingsAccount with initialized values
     public SavingsAccount() {
-        this(01, 01, 2022);
-        savingsBalance = getBalance();
+        day = 01;
+        month = 01;
+        year = 2022;
     }
 
-    // constructor 2
-    public SavingsAccount(int dd, int mm, int yyyy) {
-        super(7654321, "saveAccount2", new BigDecimal("1000"), new BigDecimal("0.0006"));
+    // constructs new SavingsAccount with the specified arguments
+    public SavingsAccount(int num, String n, BigDecimal b, BigDecimal i, int dd, int mm, int yyyy) {
+        super(num, n, b, i);
         day = dd;
         month = mm;
         year = yyyy;
-        savingsBalance = getBalance();
     }
 
+    // method to deposit specified amount in savings account
     public void deposit(BigDecimal amount) {
         System.out.println("(inside deposit method) current balance: " + savingsBalance);
         System.out.println("deposit on SavingsAccount: " + amount);
@@ -31,6 +32,7 @@ public class SavingsAccount extends Account {
         System.out.println("balance after deposit: " + savingsBalance);
     }
 
+    // method returns false if no withdraw, otherwise withdraw amount
     public boolean withdraw(BigDecimal amount) {
         System.out.println("(inside withdraw method) current balance: " + savingsBalance);
         System.out.println("withdraw on SavingsAccount: " + amount);
@@ -49,16 +51,19 @@ public class SavingsAccount extends Account {
     // monthlyInterest = (balance * interestRate) / 12
     public BigDecimal computeInterest() {
         BigDecimal monthsToGrow = new BigDecimal("12");
-        BigDecimal rate = getInterestRate();
-        BigDecimal monthlyInterest = savingsBalance.multiply(rate).divide(monthsToGrow);
+        BigDecimal monthlyInterest = savingsBalance.multiply(interestRate).divide(monthsToGrow);
         return monthlyInterest.setScale(2, RoundingMode.HALF_UP);
     }
 
     // create 2 SavingAccount instances
     // determine interest on a given balance at end of a year
     public static void main(String[] args) {
+
         SavingsAccount saveAccount1 = new SavingsAccount();
         System.out.println("------- saveAccount1 -------");
+        System.out.println();
+        System.out.println("balance inherited from account: " + saveAccount1.balance);
+
         System.out.println(
                 String.format("day: %d, month: %d, year: %d", saveAccount1.day,
                         saveAccount1.month, saveAccount1.year));
@@ -70,10 +75,16 @@ public class SavingsAccount extends Account {
 
         System.out.println();
 
-        SavingsAccount saveAccount2 = new SavingsAccount(01, 01, 2024);
+        SavingsAccount saveAccount2 = new SavingsAccount(7654321, "saveAccount2", new BigDecimal("5000"),
+                new BigDecimal("0.0006"), 01, 01, 2024);
         System.out.println("------- saveAccount2 -------");
+        System.out.println();
+        System.out.println("balance inherited from account: " +
+                saveAccount2.balance);
+
         System.out.println(
-                String.format("day: %d, month: %d, year: %d", saveAccount2.day, saveAccount2.month, saveAccount2.year));
+                String.format("day: %d, month: %d, year: %d", saveAccount2.day,
+                        saveAccount2.month, saveAccount2.year));
         System.out.println();
         saveAccount2.deposit(new BigDecimal("5000"));
         System.out.println();

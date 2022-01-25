@@ -3,14 +3,17 @@ package ch6ex7;
 import java.math.*;
 
 public class Account {
-    private int number;
-    private String name;
-    private BigDecimal balance;
-    private BigDecimal interestRate;
+    protected int number;
+    protected String name;
+    protected BigDecimal balance;
+    protected BigDecimal interestRate;
 
     // constructs new Account with initialized values
     public Account() {
-        this(1234567, "myAccount1", new BigDecimal("1000"), new BigDecimal("0.0006"));
+        number = 1234567;
+        name = "myAccount1";
+        balance = new BigDecimal("1000");
+        interestRate = new BigDecimal("0.0006");
     }
 
     // constructs new Account with the specified arguments
@@ -22,41 +25,42 @@ public class Account {
     }
 
     // method to display Account number
-    public int getNumber() {
-        return number;
+    public void printNumber() {
+        System.out.println(String.format("number of Account: %d", number));
     }
 
     // method to display Account name
-    public String getName() {
-        return name;
+    public void printName() {
+        System.out.println(String.format("name of Account: %s", name));
     }
 
     // method to display Account balance
-    public BigDecimal getBalance() {
+    public void printBalance() {
         balance = balance.setScale(2, RoundingMode.HALF_UP);
-        return balance;
+        System.out.println("balance on Account: " + balance);
     }
 
     // method to display Account interest rate
-    public BigDecimal getInterestRate() {
+    public void printInterestRate() {
         interestRate = interestRate.setScale(4, RoundingMode.HALF_UP);
-        return interestRate;
+        System.out.println("interestRate on Account: " + interestRate);
     }
 
     public static void main(String[] args) {
         Account testAccount1 = new Account();
         System.out.println("------- testAccount1 -------");
-        System.out.println(String.format("number of Account: %d", testAccount1.getNumber()));
-        System.out.println(String.format("name of Account: %s", testAccount1.getName()));
-        System.out.println("balance on Account: " + testAccount1.getBalance());
-        System.out.println("interestRate on Account: " + testAccount1.getInterestRate());
+        testAccount1.printNumber();
+        testAccount1.printName();
+        testAccount1.printBalance();
+        testAccount1.printInterestRate();
+
         System.out.println();
         System.out.println("------- testAccount2 -------");
         Account testAccount2 = new Account(9876543, "myAccount2", new BigDecimal("500"), new BigDecimal("0.0006"));
-        System.out.println(String.format("number of Account: %d", testAccount2.getNumber()));
-        System.out.println(String.format("name of Account: %s", testAccount2.getName()));
-        System.out.println("balance on Account: " + testAccount2.getBalance());
-        System.out.println("interestRate on Account: " + testAccount2.getInterestRate());
+        testAccount2.printNumber();
+        testAccount2.printName();
+        testAccount2.printBalance();
+        testAccount2.printInterestRate();
     }
 }
 
