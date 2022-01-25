@@ -10,7 +10,7 @@ public class Account {
 
     // constructs new Account with initialized values
     public Account() {
-        this(1234567, "myAccount1", new BigDecimal("1000"), new BigDecimal("0.5"));
+        this(1234567, "myAccount1", new BigDecimal("1000"), new BigDecimal("0.0006"));
     }
 
     // constructs new Account with the specified arguments
@@ -39,7 +39,7 @@ public class Account {
 
     // method to display Account interest rate
     public BigDecimal getInterestRate() {
-        interestRate = interestRate.setScale(2, RoundingMode.HALF_UP);
+        interestRate = interestRate.setScale(4, RoundingMode.HALF_UP);
         return interestRate;
     }
 
@@ -52,7 +52,7 @@ public class Account {
         System.out.println("interestRate on Account: " + testAccount1.getInterestRate());
         System.out.println();
         System.out.println("------- testAccount2 -------");
-        Account testAccount2 = new Account(9876543, "myAccount2", new BigDecimal("500"), new BigDecimal("0.25"));
+        Account testAccount2 = new Account(9876543, "myAccount2", new BigDecimal("500"), new BigDecimal("0.0006"));
         System.out.println(String.format("number of Account: %d", testAccount2.getNumber()));
         System.out.println(String.format("name of Account: %s", testAccount2.getName()));
         System.out.println("balance on Account: " + testAccount2.getBalance());

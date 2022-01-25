@@ -16,7 +16,7 @@ public class SavingsAccount extends Account {
 
     // constructor 2
     public SavingsAccount(int dd, int mm, int yyyy) {
-        super(7654321, "saveAccount2", new BigDecimal("1000"), new BigDecimal("0.5"));
+        super(7654321, "saveAccount2", new BigDecimal("1000"), new BigDecimal("0.0006"));
         day = dd;
         month = mm;
         year = yyyy;
@@ -24,7 +24,6 @@ public class SavingsAccount extends Account {
     }
 
     public void deposit(BigDecimal amount) {
-        // BigDecimal savingsBalance = getBalance();
         System.out.println("(inside deposit method) current balance: " + savingsBalance);
         System.out.println("deposit on SavingsAccount: " + amount);
 
@@ -36,15 +35,24 @@ public class SavingsAccount extends Account {
         System.out.println("(inside withdraw method) current balance: " + savingsBalance);
         System.out.println("withdraw on SavingsAccount: " + amount);
 
+        if (amount.compareTo(BigDecimal.ZERO) == 0) {
+            System.out.println("Zero withdrawal from savings, balance remains: " + savingsBalance);
+            return false;
+        }
+
         savingsBalance = savingsBalance.subtract(amount);
         System.out.println("balance after withdraw: " + savingsBalance);
-
         return true;
     }
 
     // method to calculate monthly interest
     // monthlyInterest = (balance * interestRate) / 12
-    public BigDecimal computeInterest();
+    public BigDecimal computeInterest() {
+        BigDecimal monthsToGrow = new BigDecimal("12");
+        BigDecimal rate = getInterestRate();
+        BigDecimal monthlyInterest = savingsBalance.multiply(rate).divide(monthsToGrow);
+        return monthlyInterest.setScale(2, RoundingMode.HALF_UP);
+    }
 
     // create 2 SavingAccount instances
     // determine interest on a given balance at end of a year
@@ -58,25 +66,19 @@ public class SavingsAccount extends Account {
         saveAccount1.deposit(new BigDecimal("5000"));
         System.out.println();
         saveAccount1.withdraw(new BigDecimal("250"));
+        System.out.println("computeInterest: $" + saveAccount1.computeInterest());
 
         System.out.println();
 
-        SavingsAccount saveAccount2 = new SavingsAccount(02, 02, 2022);
+        SavingsAccount saveAccount2 = new SavingsAccount(01, 01, 2024);
         System.out.println("------- saveAccount2 -------");
         System.out.println(
                 String.format("day: %d, month: %d, year: %d", saveAccount2.day, saveAccount2.month, saveAccount2.year));
         System.out.println();
         saveAccount2.deposit(new BigDecimal("5000"));
         System.out.println();
-        saveAccount2.withdraw(new BigDecimal("250"));
-
-        // saveAccount1.computeInterest();
-        // System.out.println("balance inherited from class Account: " +
-        // saveAccount1.getBalance());
-        // System.out.println(saveAccount1.getNumber());
-        // System.out.println(saveAccount1.getName());
-        // System.out.println(saveAccount1.getBalance());
-        // System.out.println(saveAccount1.getInterestRate());
+        saveAccount2.withdraw(new BigDecimal("0"));
+        System.out.println("computeInterest: $" + saveAccount2.computeInterest());
     }
 }
 
