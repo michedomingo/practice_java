@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public abstract class Bird {
 
-    public void chirp() {
-        System.out.println("chirp");
-    }
+    // public void chirp() {
+    // System.out.println("chirp");
+    // }
+
+    public abstract void chirp();
 
     public static void main(String[] args) {
         Bird bird;
