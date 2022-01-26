@@ -12,7 +12,7 @@ public abstract class Bird {
         Bird bird;
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a number that is either 1 or 2: ");
+        System.out.print("Enter a number that is either 1, 2, or 3: ");
         int birdType = scanner.nextInt();
 
         while (true) {
@@ -22,8 +22,11 @@ public abstract class Bird {
             } else if (birdType == 2) {
                 bird = new Mallard();
                 break;
+            } else if (birdType == 3) {
+                bird = new Crow();
+                break;
             } else {
-                System.out.print("Try again, enter either 1 or 2: ");
+                System.out.print("Try again, enter either 1, 2, or 3: ");
                 birdType = scanner.nextInt();
             }
         }
