@@ -25,28 +25,27 @@ public class MortgageCalculator extends FinancialCalculator {
     // term of the mortgage in years (T)
     private int mortgageTerm;
 
-    // starting month from which to calculate interest
-    private int startMonth;
-
-    // starting year from which to calculate interest
-    private int startYear;
-
     // total number of monthly payments (n * T)
     private int totalNumOfPymnts;
 
-    // constructs a GregorianCalendar object...
+    // starting month from which to calculate interest
+//     private int startMonth;
+    // starting year from which to calculate interest
+//     private int startYear;
+
+    // constructs new MortgageCalulator with initialized value
     public MortgageCalculator() {
-        calendar = new GregorianCalendar();
+        // calendar = new GregorianCalendar();
         pymntsInYear = 12;
     }
 
-    // get total number of monthly payments (n * T)
+    // computes total number of monthly payments (n * T)
     private int calculateTotalNumOfPayments(int term) {
         // return ((pymntsInYear - monthsIn1stYear) + pymntsInYear * (term - 1));
         return pymntsInYear * term;
     }
 
-    // get monthly interest rate (r / n)
+    // computes monthly interest rate (r / n)
     private BigDecimal calculateInterestRateMonthly(BigDecimal annualRate) {
         BigDecimal percent = new BigDecimal("100");
         BigDecimal numMonthsInYear = BigDecimal.valueOf(pymntsInYear);
@@ -54,7 +53,7 @@ public class MortgageCalculator extends FinancialCalculator {
         return monthlyRate;
     }
 
-    // get monthly interest payment amount
+    // computes monthly interest payment amount
     private BigDecimal calculateInterestPymntMonthly(BigDecimal A, BigDecimal monthlyRate, int nT) {
         BigDecimal one = new BigDecimal("1");
         BigDecimal numerator = A.multiply(monthlyRate); // A * r/n
@@ -64,12 +63,12 @@ public class MortgageCalculator extends FinancialCalculator {
         return numerator.divide(denominator, 2, RoundingMode.HALF_UP);
     }
 
-    // get total interest payment amount
+    // computes total interest payment amount
     private BigDecimal calculateInterestPymntTotal(BigDecimal intPaidMonthly, int pymntAmt, int term) {
         return intPaidMonthly.multiply(BigDecimal.valueOf(pymntAmt)).multiply(BigDecimal.valueOf(term));
     }
 
-    // prompts user to enter input...
+    // prompts user to enter mortgage amount, interest rate, and term
     public void getUserInput() {
         Scanner scanner = new Scanner(System.in);
 
@@ -82,32 +81,30 @@ public class MortgageCalculator extends FinancialCalculator {
         System.out.print("Enter the term of the mortgage in years: ");
         mortgageTerm = scanner.nextInt();
 
-        System.out.print("Enter the starting month and year [e.g. 1 2022 for January 2022]: ");
-        startMonth = scanner.nextInt();
-        startYear = scanner.nextInt();
+        // System.out.print("Enter the starting month and year [e.g. 1 2022 for January
+        // 2022]: ");
+        // startMonth = scanner.nextInt();
+        // startYear = scanner.nextInt();
     }
 
     // prints total interest paid on mortgage
     public void compute() {
         // initialize calendar
-        calendar.set(startYear, startMonth - 1, 1);
+        // calendar.set(startYear, startMonth - 1, 1);
 
-        // get total number of monthly payments (n * T)
+        // get total number of monthly payments
         totalNumOfPymnts = calculateTotalNumOfPayments(mortgageTerm);
-        System.out.println(String.format("totalNumOfPymnts: %d", totalNumOfPymnts));
 
-        // get monthly interest rate (r / n)
+        // get monthly interest rate
         interestRateMonthly = calculateInterestRateMonthly(interestRateAnnual);
-        System.out.println("interestRateMonthly: " + interestRateMonthly + "%");
 
         // get monthly interest payment amount
         interestPymntMonthly = calculateInterestPymntMonthly(mortgageAmount,
                 interestRateMonthly, totalNumOfPymnts);
-        System.out.println("interestPymntMonthly: $" + interestPymntMonthly);
 
         // get total interest payment amount
         interestPymntTotal = calculateInterestPymntTotal(interestPymntMonthly, pymntsInYear, mortgageTerm);
-        System.out.println("interestPymntTotal: $" + interestPymntTotal);
+        System.out.println("Total payment in interest for " + totalNumOfPymnts + " months: $" + interestPymntTotal);
 
     }
 
@@ -132,4 +129,4 @@ public class MortgageCalculator extends FinancialCalculator {
 // A - mortgage amount
 // r - interest rate
 // n - number of payments in a year
-// T - term of the mortgage (in years)
+// T - term of the mortgage in years%
