@@ -29,9 +29,9 @@ public class MortgageCalculator extends FinancialCalculator {
     private int totalNumOfPymnts;
 
     // starting month from which to calculate interest
-//     private int startMonth;
+    // private int startMonth;
     // starting year from which to calculate interest
-//     private int startYear;
+    // private int startYear;
 
     // constructs new MortgageCalulator with initialized value
     public MortgageCalculator() {
@@ -129,4 +129,4 @@ public class MortgageCalculator extends FinancialCalculator {
 // A - mortgage amount
 // r - interest rate
 // n - number of payments in a year
-// T - term of the mortgage in years%
+// T - term of the mortgage in years
