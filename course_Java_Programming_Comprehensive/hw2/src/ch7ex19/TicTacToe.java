@@ -1,9 +1,15 @@
 package ch7ex19;
 
+import java.util.*;
+import java.awt.*;
+
 public class TicTacToe {
 
     public static final int WIDTH = 3; // grid width
     public static final int HEIGHT = 3; // grid height
+    ArrayList<Point> fillSquare = new ArrayList<Point>();
+    Boolean gameTie = false;
+    public int player = 1;
 
     public enum Cell {
         EMPTY { // empty square - stored as a 0
@@ -37,9 +43,8 @@ public class TicTacToe {
         }
     }
 
-    public void setCell(int row, int col, Cell value) {
-        // if the row is less than 0 or bigger than the board len, return error
-        board[row][col] = value;
+    public void setCell(int row, int col, int value) {
+        board[row][col] = Cell.values()[value];
     }
 
     public String toString() {
@@ -54,8 +59,57 @@ public class TicTacToe {
         return result;
     }
 
-    public void playGame() {
+    public int selectNextPlayer() {
+        if (player == 1)
+            player = 2;
+        else
+            player = 1;
+        return player;
+    }
 
+    public Point fillBoard() {
+        Random r = new Random();
+        int row, col;
+        Point p;
+
+        while (true) {
+            row = r.nextInt(WIDTH);
+            col = r.nextInt(HEIGHT);
+            p = new Point(row, col);
+
+            System.out.println("row: " + row);
+            System.out.println("col: " + col);
+
+            if (fillSquare.contains(p)) {
+                System.out.println("try again...");
+                continue;
+            } else {
+                fillSquare.add(new Point(row, col));
+                return p;
+            }
+        }
+    }
+
+    public String playGame() {
+        int count = 0;
+        Point filledPoint;
+
+        do {
+            System.out.println("\tTurn #" + ++count);
+            player = selectNextPlayer();
+            System.out.println("\tplayer: " + Cell.values()[player]);
+
+            filledPoint = fillBoard();
+            setCell((int) (filledPoint.getX()), (int) (filledPoint.getY()), player);
+
+        } while (!checkForWinner());
+
+        System.out.println("\ncheckForWinner(): " + checkForWinner());
+
+        if (!gameTie)
+            return "\nPlayer '" + Cell.values()[player].getSymbol() + "' won!";
+        else
+            return "\nGame is draw!";
     }
 
     public boolean checkForWinner() {
@@ -63,8 +117,8 @@ public class TicTacToe {
 
         diagonalWin1 = (board[0][0] != Cell.EMPTY && board[0][0] == board[1][1] && board[1][1] == board[2][2]);
         diagonalWin2 = (board[0][2] != Cell.EMPTY && board[2][0] == board[1][1] && board[1][1] == board[0][2]);
-        // set of 3 noughts or crosses along first or second diagonal?
-        if (diagonalWin1 || diagonalWin2) {
+
+        if (diagonalWin1 || diagonalWin2) { // set of 3 noughts or crosses along first or second diagonal?
             return true;
         } else {
             for (int row = 0; row < WIDTH; row++) {
@@ -82,22 +136,25 @@ public class TicTacToe {
             }
         }
         // criteria to win not met
-        return false;
+        if (fillSquare.size() < 9) {
+            return false;
+        } else {
+            gameTie = true;
+            return false;
+        }
     }
 
     public static void main(String[] args) {
         TicTacToe gameboard = new TicTacToe();
-        System.out.println(gameboard);
-        // diagonalWin1 set
-        gameboard.setCell(0, 0, Cell.CROSS);
-        gameboard.setCell(1, 1, Cell.CROSS);
-        gameboard.setCell(2, 2, Cell.CROSS);
-
-        System.out.println(gameboard);
-        System.out.println(gameboard.checkForWinner());
-
+        String winner = gameboard.playGame();
+        System.out.println(gameboard + winner);
     }
 }
+
+// diagonalWin1 set
+// setCell(0, 0, player);
+// setCell(1, 1, player);
+// setCell(2, 2, player);
 
 // diagonalWin2 set
 // gameboard.setCell(0, 2, Cell.CROSS);
