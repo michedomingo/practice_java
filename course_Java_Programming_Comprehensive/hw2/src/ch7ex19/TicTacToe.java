@@ -7,7 +7,7 @@ public class TicTacToe {
 
     public static final int WIDTH = 3; // grid width
     public static final int HEIGHT = 3; // grid height
-    ArrayList<Point> fillSquare = new ArrayList<Point>();
+    ArrayList<Point> squaresToFill = new ArrayList<Point>();
     Boolean gameTie = false;
     public int player = 1;
 
@@ -33,7 +33,7 @@ public class TicTacToe {
 
     private Cell[][] board;
 
-    // constructor
+    // constructs gameboard with empty cells
     public TicTacToe() {
         board = new Cell[WIDTH][HEIGHT];
         for (int row = 0; row < WIDTH; row++) {
@@ -41,10 +41,6 @@ public class TicTacToe {
                 board[row][col] = Cell.EMPTY;
             }
         }
-    }
-
-    public void setCell(int row, int col, int value) {
-        board[row][col] = Cell.values()[value];
     }
 
     public String toString() {
@@ -67,7 +63,7 @@ public class TicTacToe {
         return player;
     }
 
-    public Point fillBoard() {
+    public Point selectSquare() {
         Random r = new Random();
         int row, col;
         Point p;
@@ -77,39 +73,32 @@ public class TicTacToe {
             col = r.nextInt(HEIGHT);
             p = new Point(row, col);
 
-            System.out.println("row: " + row);
-            System.out.println("col: " + col);
-
-            if (fillSquare.contains(p)) {
-                System.out.println("try again...");
+            if (squaresToFill.contains(p)) {
                 continue;
             } else {
-                fillSquare.add(new Point(row, col));
+                squaresToFill.add(new Point(row, col));
                 return p;
             }
         }
     }
 
+    public void setCell(int row, int col, int value) {
+        board[row][col] = Cell.values()[value];
+    }
+
     public String playGame() {
-        int count = 0;
-        Point filledPoint;
+        Point pointSelected;
 
         do {
-            System.out.println("\tTurn #" + ++count);
             player = selectNextPlayer();
-            System.out.println("\tplayer: " + Cell.values()[player]);
-
-            filledPoint = fillBoard();
-            setCell((int) (filledPoint.getX()), (int) (filledPoint.getY()), player);
-
+            pointSelected = selectSquare();
+            setCell((int) (pointSelected.getX()), (int) (pointSelected.getY()), player);
         } while (!checkForWinner());
-
-        System.out.println("\ncheckForWinner(): " + checkForWinner());
 
         if (!gameTie)
             return "\nPlayer '" + Cell.values()[player].getSymbol() + "' won!";
         else
-            return "\nGame is draw!";
+            return "\nGame is a draw!";
     }
 
     public boolean checkForWinner() {
@@ -136,18 +125,25 @@ public class TicTacToe {
             }
         }
         // criteria to win not met
-        if (fillSquare.size() < 9) {
+        if (squaresToFill.size() < 9) {
             return false;
         } else {
             gameTie = true;
-            return false;
+            return true; // break out of do-while loop in playGame()
         }
     }
 
     public static void main(String[] args) {
-        TicTacToe gameboard = new TicTacToe();
-        String winner = gameboard.playGame();
-        System.out.println(gameboard + winner);
+        int count = 0, maxGames = 4;
+
+        while (count < maxGames) {
+            System.out.println("\nGame #" + ++count);
+            System.out.println();
+            TicTacToe gameboard = new TicTacToe();
+            String winner = gameboard.playGame();
+            System.out.println(gameboard + winner);
+            System.out.println("_______________");
+        }
     }
 }
 
@@ -157,18 +153,18 @@ public class TicTacToe {
 // setCell(2, 2, player);
 
 // diagonalWin2 set
-// gameboard.setCell(0, 2, Cell.CROSS);
-// gameboard.setCell(1, 1, Cell.CROSS);
-// gameboard.setCell(2, 0, Cell.CROSS);
+// setCell(0, 2, player);
+// setCell(1, 1, player);
+// setCell(2, 0, player);
 
 // horizontalWin set
-// gameboard.setCell(0, 0, Cell.CROSS);
-// gameboard.setCell(0, 1, Cell.CROSS);
-// gameboard.setCell(0, 2, Cell.CROSS);
+// setCell(0, 0, player);
+// setCell(0, 1, player);
+// setCell(0, 2, player);
 
 // verticalWin set
-// gameboard.setCell(0, 1, Cell.CROSS);
-// gameboard.setCell(1, 1, Cell.CROSS);
-// gameboard.setCell(2, 1, Cell.CROSS);
+// setCell(0, 1, player);
+// setCell(1, 1, player);
+// setCell(2, 1, player);
 
 // hw2_ch7_p329_pdf334_ex19
