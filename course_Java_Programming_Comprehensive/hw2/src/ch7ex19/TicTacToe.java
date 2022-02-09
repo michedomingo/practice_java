@@ -7,22 +7,22 @@ public class TicTacToe {
 
     public static final int WIDTH = 3; // grid width
     public static final int HEIGHT = 3; // grid height
-    ArrayList<Point> squaresToFill = new ArrayList<Point>();
+    ArrayList<Point> cellsToSet = new ArrayList<Point>();
     Boolean gameTie = false;
     public int player = 1;
 
     public enum Cell {
-        EMPTY { // empty square - stored as a 0
+        EMPTY { // empty square - stored at ordinal 0
             public String getSymbol() {
                 return "_";
             }
         },
-        NOUGHT { // O - stored as a 1
+        NOUGHT { // O - stored at ordinal 1
             public String getSymbol() {
                 return "O";
             }
         },
-        CROSS { // X - stored as a 2
+        CROSS { // X - stored at ordinal 2
             public String getSymbol() {
                 return "X";
             }
@@ -73,10 +73,10 @@ public class TicTacToe {
             col = r.nextInt(HEIGHT);
             p = new Point(row, col);
 
-            if (squaresToFill.contains(p)) {
+            if (cellsToSet.contains(p)) {
                 continue;
             } else {
-                squaresToFill.add(new Point(row, col));
+                cellsToSet.add(new Point(row, col));
                 return p;
             }
         }
@@ -125,7 +125,7 @@ public class TicTacToe {
             }
         }
         // criteria to win not met
-        if (squaresToFill.size() < 9) {
+        if (cellsToSet.size() < 9) {
             return false;
         } else {
             gameTie = true;
