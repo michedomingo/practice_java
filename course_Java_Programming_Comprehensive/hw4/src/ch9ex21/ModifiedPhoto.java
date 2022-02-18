@@ -14,6 +14,10 @@ public class ModifiedPhoto {
     private JPanel titlePanel;
     private JLabel titleLabel;
     private JFileChooser chooser;
+    JButton shiftNorthButton;
+    JButton shiftSouthButton;
+    JButton shiftEastButton;
+    JButton shiftWestButton;
 
     public ModifiedPhoto() {
         window = new JFrame("Modified Photo");
@@ -63,11 +67,14 @@ public class ModifiedPhoto {
     // creates panel with buttons to shift the image when clicked
     public JPanel createShiftPanel() {
         JPanel shiftPanel = new JPanel();
-
-        JButton shiftNorthButton = new JButton("North");
-        JButton shiftSouthButton = new JButton("South");
-        JButton shiftEastButton = new JButton("East");
-        JButton shiftWestButton = new JButton("West");
+        Border bevelLowered = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
+        Border titledCentered = BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(10, 10,
+                10, 10, Color.darkGray), "Shift Image", TitledBorder.CENTER, TitledBorder.TOP);
+        shiftPanel.setBorder(BorderFactory.createCompoundBorder(bevelLowered, titledCentered));
+        shiftNorthButton = new JButton("North");
+        shiftSouthButton = new JButton("South");
+        shiftEastButton = new JButton("East");
+        shiftWestButton = new JButton("West");
         shiftPanel.add(shiftNorthButton);
         shiftPanel.add(shiftSouthButton);
         shiftPanel.add(shiftEastButton);
@@ -97,6 +104,7 @@ public class ModifiedPhoto {
             }
         });
 
+        shiftPanel.setBackground(Color.lightGray);
         return shiftPanel;
     }
 
