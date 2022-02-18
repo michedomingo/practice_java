@@ -129,6 +129,12 @@ public class ModifiedPhoto {
             }
         });
 
+        menuImageShear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                createShearValuesInputBox();
+            }
+        });
+
         menuBar.setBackground(Color.lightGray);
         return menuBar;
     }
@@ -161,8 +167,8 @@ public class ModifiedPhoto {
     }
 
     public void createShearValuesInputBox() {
-        JTextField horizontalField = new JLabel(5);
-        JTextField verticalField = new JLabel(5);
+        JTextField horizontalField = new JTextField(5);
+        JTextField verticalField = new JTextField(5);
 
         JPanel shearValuesPanel = new JPanel();
         shearValuesPanel.add(new JLabel("Enter horizontal shear value:"));
@@ -171,6 +177,18 @@ public class ModifiedPhoto {
         shearValuesPanel.add(new JLabel("Enter vertical shear value:"));
         shearValuesPanel.add(verticalField);
 
+        // String result = JOptionPane.showInputDialog(shearValuesPanel, "Enter Shear
+        // Image Values:", "Shear Image",
+        // JOptionPane.OK_CANCEL_OPTION);
+
+        int result = JOptionPane.showConfirmDialog(null, shearValuesPanel,
+                "Shear Image", JOptionPane.OK_CANCEL_OPTION);
+
+        // if (Integer.valueOf(result) == JOptionPane.OK_OPTION) {
+        if (result == JOptionPane.OK_OPTION) {
+            System.out.println("horizontalField: " + horizontalField.getText());
+            System.out.println("verticalField: " + verticalField.getText());
+        }
     }
 
     public static void main(String[] args) {
