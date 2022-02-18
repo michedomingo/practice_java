@@ -62,16 +62,16 @@ public class ModifiedPhoto {
 
     // creates panel with buttons to shift the image when clicked
     public JPanel createShiftPanel() {
-        JPanel buttonPanel = new JPanel();
+        JPanel shiftPanel = new JPanel();
 
         JButton shiftNorthButton = new JButton("North");
         JButton shiftSouthButton = new JButton("South");
         JButton shiftEastButton = new JButton("East");
         JButton shiftWestButton = new JButton("West");
-        buttonPanel.add(shiftNorthButton);
-        buttonPanel.add(shiftSouthButton);
-        buttonPanel.add(shiftEastButton);
-        buttonPanel.add(shiftWestButton);
+        shiftPanel.add(shiftNorthButton);
+        shiftPanel.add(shiftSouthButton);
+        shiftPanel.add(shiftEastButton);
+        shiftPanel.add(shiftWestButton);
 
         shiftNorthButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class ModifiedPhoto {
             }
         });
 
-        return buttonPanel;
+        return shiftPanel;
     }
 
     public JMenuBar createMenuBar() {
@@ -125,13 +125,19 @@ public class ModifiedPhoto {
 
         menuImageRotate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                createRotateInputBox();
+                createRotateOptionPane();
             }
         });
 
         menuImageShear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                createShearValuesInputBox();
+                createShearValuesOptionPane();
+            }
+        });
+
+        menuImageScale.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                createScaleAmountOptionPane();
             }
         });
 
@@ -160,35 +166,44 @@ public class ModifiedPhoto {
         }
     }
 
-    public void createRotateInputBox() {
+    public void createRotateOptionPane() {
         String rotationAngle = JOptionPane.showInputDialog(window, "Enter rotation angle:", "Rotate Image",
                 JOptionPane.PLAIN_MESSAGE);
         drawingPanel.rotateImage(Double.valueOf(rotationAngle));
     }
 
-    public void createShearValuesInputBox() {
-        JTextField horizontalField = new JTextField(5);
-        JTextField verticalField = new JTextField(5);
+    public void createShearValuesOptionPane() {
+        JTextField shearHorizontal = new JTextField(5);
+        JTextField shearVertical = new JTextField(5);
 
         JPanel shearValuesPanel = new JPanel();
         shearValuesPanel.add(new JLabel("Enter horizontal shear value:"));
-        shearValuesPanel.add(horizontalField);
+        shearValuesPanel.add(shearHorizontal);
         shearValuesPanel.add(Box.createHorizontalStrut(15)); // space between input fields
         shearValuesPanel.add(new JLabel("Enter vertical shear value:"));
-        shearValuesPanel.add(verticalField);
-
-        // String result = JOptionPane.showInputDialog(shearValuesPanel, "Enter Shear
-        // Image Values:", "Shear Image",
-        // JOptionPane.OK_CANCEL_OPTION);
+        shearValuesPanel.add(shearVertical);
 
         int result = JOptionPane.showConfirmDialog(null, shearValuesPanel,
                 "Shear Image", JOptionPane.OK_CANCEL_OPTION);
 
-        // if (Integer.valueOf(result) == JOptionPane.OK_OPTION) {
         if (result == JOptionPane.OK_OPTION) {
-            System.out.println("horizontalField: " + horizontalField.getText());
-            System.out.println("verticalField: " + verticalField.getText());
+            if (!shearHorizontal.getText().isEmpty() && !shearVertical.getText().isEmpty()) {
+                drawingPanel.shearImage(Float.parseFloat(shearHorizontal.getText()) / 100.0f,
+                        Float.parseFloat(shearVertical.getText()) / 100.0f);
+            } else if (!shearHorizontal.getText().isEmpty() && shearVertical.getText().isEmpty()) {
+                drawingPanel.shearImage(Float.parseFloat(shearHorizontal.getText()) / 100.0f, 0);
+            } else if (shearHorizontal.getText().isEmpty() && !shearVertical.getText().isEmpty()) {
+                drawingPanel.shearImage(0, Float.parseFloat(shearVertical.getText()) / 100.0f);
+            } else {
+                drawingPanel.shearImage(0, 0);
+            }
         }
+    }
+
+    public void createScaleAmountOptionPane() {
+        String scaleAmount = JOptionPane.showInputDialog(window, "Enter scale amount:", "Scale Image",
+                JOptionPane.PLAIN_MESSAGE);
+        drawingPanel.scaleImage(Float.valueOf(scaleAmount));
     }
 
     public static void main(String[] args) {
