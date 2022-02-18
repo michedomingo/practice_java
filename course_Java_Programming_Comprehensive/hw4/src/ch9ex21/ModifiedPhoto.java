@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 
 public class ModifiedPhoto {
     private JFrame window;
@@ -11,6 +13,7 @@ public class ModifiedPhoto {
     private ModifiedPhotoDrawingPanel drawingPanel;
     private JPanel titlePanel;
     private JLabel titleLabel;
+    private JFileChooser chooser;
 
     public ModifiedPhoto() {
         window = new JFrame("Modified Photo");
@@ -102,20 +105,47 @@ public class ModifiedPhoto {
 
         JMenu menuFile = new JMenu("File");
         menuBar.add(menuFile); // add a menu called File to menuBar
-        JMenu menuFileItem = new JMenu("Open Image");
-        menuFile.add(menuFileItem); // add an item called Open Image to File menu
+        JMenuItem menuFileOpenImage = new JMenuItem("Open Image");
+        menuFile.add(menuFileOpenImage); // add Open Image item to File menu
 
         JMenu menuImage = new JMenu("Image");
         menuBar.add(menuImage); // add a menu called Image to menuBar
-        JMenu menuImageRotate = new JMenu("Rotate");
-        menuImage.add(menuImageRotate); // add an item called Rotate to Image menu
-        JMenu menuImageShear = new JMenu("Shear");
-        menuImage.add(menuImageShear); // add an item called Shear to Image menu
-        JMenu menuImageScale = new JMenu("Scale");
-        menuImage.add(menuImageScale); // add an item called Scale to Image menu
+        JMenuItem menuImageRotate = new JMenuItem("Rotate");
+        menuImage.add(menuImageRotate); // add Rotate item to Image menu
+        JMenuItem menuImageShear = new JMenuItem("Shear");
+        menuImage.add(menuImageShear); // add Shear item to Image menu
+        JMenuItem menuImageScale = new JMenuItem("Scale");
+        menuImage.add(menuImageScale); // add Scale item to Image menu
+
+        menuFileOpenImage.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                selectFile();
+            }
+        });
 
         menuBar.setBackground(Color.lightGray);
         return menuBar;
+    }
+
+    public void selectFile() {
+        chooser = new JFileChooser();
+        // file filter allows user to select JPEG & PNG files only
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG & PNG files", "JPG", "JPEG", "PNG");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(window);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // open a dialog box to select files
+            File file = chooser.getSelectedFile();
+            System.out.println(file.getPath());
+
+            // load the image from the file and put it in drawing panel
+            Image image = new javax.swing.ImageIcon(file.getPath()).getImage();
+            drawingPanel.loadImage(image);
+
+            // update the title of the image
+            titleLabel.setText(file.getName());
+            titlePanel.repaint();
+        }
     }
 
     public static void main(String[] args) {

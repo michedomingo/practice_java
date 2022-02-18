@@ -30,6 +30,11 @@ public class ModifiedPhotoDrawingPanel extends JPanel {
         repaint();
     }
 
+    public void loadImage(Image i) {
+        backgroundImage = i;
+        repaint();
+    }
+
 }
 
 // hw3_ch9_p461_pdf466_ex21
