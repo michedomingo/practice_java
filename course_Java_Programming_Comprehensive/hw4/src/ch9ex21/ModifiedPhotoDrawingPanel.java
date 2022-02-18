@@ -1,7 +1,6 @@
 package ch9ex21;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class ModifiedPhotoDrawingPanel extends JPanel {
@@ -9,6 +8,7 @@ public class ModifiedPhotoDrawingPanel extends JPanel {
 
     private int shiftX = 0; // shift image along x-axis
     private int shiftY = 0; // shift image along y-axis
+    private double angle = 0.0; // rotate image by this angle
 
     public ModifiedPhotoDrawingPanel() {
         backgroundImage = new javax.swing.ImageIcon("image/birds.jpeg").getImage();
@@ -21,12 +21,20 @@ public class ModifiedPhotoDrawingPanel extends JPanel {
         // shift image
         g2.translate(shiftX, shiftY);
 
+        // rotate image
+        g2.rotate(angle, 250, 250);
+
         g2.drawImage(backgroundImage, 0, 0, null);
     }
 
     public void shiftImage(int x, int y) {
         shiftX += x;
         shiftY += y;
+        repaint();
+    }
+
+    public void rotateImage(double a) {
+        angle += a;
         repaint();
     }
 

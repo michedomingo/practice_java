@@ -123,6 +123,12 @@ public class ModifiedPhoto {
             }
         });
 
+        menuImageRotate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                createRotateInputBox();
+            }
+        });
+
         menuBar.setBackground(Color.lightGray);
         return menuBar;
     }
@@ -146,6 +152,25 @@ public class ModifiedPhoto {
             titleLabel.setText(file.getName());
             titlePanel.repaint();
         }
+    }
+
+    public void createRotateInputBox() {
+        String rotationAngle = JOptionPane.showInputDialog(window, "Enter rotation angle:", "Rotate Image",
+                JOptionPane.PLAIN_MESSAGE);
+        drawingPanel.rotateImage(Double.valueOf(rotationAngle));
+    }
+
+    public void createShearValuesInputBox() {
+        JTextField horizontalField = new JLabel(5);
+        JTextField verticalField = new JLabel(5);
+
+        JPanel shearValuesPanel = new JPanel();
+        shearValuesPanel.add(new JLabel("Enter horizontal shear value:"));
+        shearValuesPanel.add(horizontalField);
+        shearValuesPanel.add(Box.createHorizontalStrut(15)); // space between input fields
+        shearValuesPanel.add(new JLabel("Enter vertical shear value:"));
+        shearValuesPanel.add(verticalField);
+
     }
 
     public static void main(String[] args) {
