@@ -14,10 +14,9 @@ public class ModifiedPhoto {
     private JPanel titlePanel;
     private JLabel titleLabel;
     private JFileChooser chooser;
-    JButton shiftNorthButton;
-    JButton shiftSouthButton;
-    JButton shiftEastButton;
-    JButton shiftWestButton;
+    private JTextField shearHorizontal;
+    private JTextField shearVertical;
+    private String rotationAngle;
 
     public ModifiedPhoto() {
         window = new JFrame("Modified Photo");
@@ -27,9 +26,8 @@ public class ModifiedPhoto {
         titleLabel = new JLabel("birds.jpeg"); // create label
         titlePanel.add(titleLabel);
 
-        groupPanel.add(createShiftPanel()); // create shift panel
-
         window.setJMenuBar(createMenuBar()); // create menu bar
+        groupPanel.add(createShiftPanel()); // create shift panel
 
         window.setContentPane(topPanel);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,50 +60,6 @@ public class ModifiedPhoto {
         titlePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
         titlePanel.setBackground(Color.lightGray);
         return titlePanel;
-    }
-
-    // creates panel with buttons to shift the image when clicked
-    public JPanel createShiftPanel() {
-        JPanel shiftPanel = new JPanel();
-        Border bevelLowered = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
-        Border titledCentered = BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(10, 10,
-                10, 10, Color.darkGray), "Shift Image", TitledBorder.CENTER, TitledBorder.TOP);
-        shiftPanel.setBorder(BorderFactory.createCompoundBorder(bevelLowered, titledCentered));
-        shiftNorthButton = new JButton("North");
-        shiftSouthButton = new JButton("South");
-        shiftEastButton = new JButton("East");
-        shiftWestButton = new JButton("West");
-        shiftPanel.add(shiftNorthButton);
-        shiftPanel.add(shiftSouthButton);
-        shiftPanel.add(shiftEastButton);
-        shiftPanel.add(shiftWestButton);
-
-        shiftNorthButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                drawingPanel.shiftImage(0, -20); // translate image north
-            }
-        });
-
-        shiftSouthButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                drawingPanel.shiftImage(0, 20); // translate image south
-            }
-        });
-
-        shiftEastButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                drawingPanel.shiftImage(20, 0); // translate image east
-            }
-        });
-
-        shiftWestButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                drawingPanel.shiftImage(-20, 0); // translate image west
-            }
-        });
-
-        shiftPanel.setBackground(Color.lightGray);
-        return shiftPanel;
     }
 
     public JMenuBar createMenuBar() {
@@ -175,14 +129,14 @@ public class ModifiedPhoto {
     }
 
     public void createRotateOptionPane() {
-        String rotationAngle = JOptionPane.showInputDialog(window, "Enter rotation angle:", "Rotate Image",
+        rotationAngle = JOptionPane.showInputDialog(window, "Enter rotation angle:", "Rotate Image",
                 JOptionPane.PLAIN_MESSAGE);
         drawingPanel.rotateImage(Double.valueOf(rotationAngle));
     }
 
     public void createShearValuesOptionPane() {
-        JTextField shearHorizontal = new JTextField(5);
-        JTextField shearVertical = new JTextField(5);
+        shearHorizontal = new JTextField(5);
+        shearVertical = new JTextField(5);
 
         JPanel shearValuesPanel = new JPanel();
         shearValuesPanel.add(new JLabel("Enter horizontal shear value:"));
@@ -212,6 +166,54 @@ public class ModifiedPhoto {
         String scaleAmount = JOptionPane.showInputDialog(window, "Enter scale amount:", "Scale Image",
                 JOptionPane.PLAIN_MESSAGE);
         drawingPanel.scaleImage(Float.valueOf(scaleAmount));
+    }
+
+    // creates panel with buttons to shift the image when clicked
+    public JPanel createShiftPanel() {
+        JPanel shiftPanel = new JPanel();
+        Border bevelLowered = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
+        Border titledCentered = BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(10, 10,
+                10, 10, Color.darkGray), "Shift Image", TitledBorder.CENTER, TitledBorder.TOP);
+        shiftPanel.setBorder(BorderFactory.createCompoundBorder(bevelLowered, titledCentered));
+
+        JButton shiftNorthButton = new JButton("North");
+        JButton shiftSouthButton = new JButton("South");
+        JButton shiftEastButton = new JButton("East");
+        JButton shiftWestButton = new JButton("West");
+        shiftPanel.add(shiftNorthButton);
+        shiftPanel.add(shiftSouthButton);
+        shiftPanel.add(shiftEastButton);
+        shiftPanel.add(shiftWestButton);
+
+        shiftNorthButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                drawingPanel.shiftImage(0, -20); // translate image north
+            }
+        });
+
+        shiftSouthButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                drawingPanel.shiftImage(0, 20); // translate image south
+            }
+        });
+
+        shiftEastButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                drawingPanel.shiftImage(20, 0); // translate image east
+            }
+        });
+
+        shiftWestButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                drawingPanel.shiftImage(-20, 0); // translate image west
+            }
+        });
+        shiftNorthButton.setToolTipText("Shift image North");
+        shiftSouthButton.setToolTipText("Shift image South");
+        shiftEastButton.setToolTipText("Shift image East");
+        shiftWestButton.setToolTipText("Shift image West");
+        shiftPanel.setBackground(Color.lightGray);
+        return shiftPanel;
     }
 
     public static void main(String[] args) {
