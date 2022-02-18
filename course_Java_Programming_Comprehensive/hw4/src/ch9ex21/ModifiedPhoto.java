@@ -14,9 +14,10 @@ public class ModifiedPhoto {
     private JPanel titlePanel;
     private JLabel titleLabel;
     private JFileChooser chooser;
+    private String rotationAngle;
     private JTextField shearHorizontal;
     private JTextField shearVertical;
-    private String rotationAngle;
+    private String scaleAmount;
 
     public ModifiedPhoto() {
         window = new JFrame("Modified Photo");
@@ -131,7 +132,11 @@ public class ModifiedPhoto {
     public void createRotateOptionPane() {
         rotationAngle = JOptionPane.showInputDialog(window, "Enter rotation angle:", "Rotate Image",
                 JOptionPane.PLAIN_MESSAGE);
-        drawingPanel.rotateImage(Double.valueOf(rotationAngle));
+
+        if (!rotationAngle.isEmpty())
+            drawingPanel.rotateImage((Math.PI * 2) / 360 * Double.valueOf(rotationAngle));
+        else
+            drawingPanel.rotateImage(0);
     }
 
     public void createShearValuesOptionPane() {
@@ -150,12 +155,12 @@ public class ModifiedPhoto {
 
         if (result == JOptionPane.OK_OPTION) {
             if (!shearHorizontal.getText().isEmpty() && !shearVertical.getText().isEmpty()) {
-                drawingPanel.shearImage(Float.parseFloat(shearHorizontal.getText()) / 100.0f,
-                        Float.parseFloat(shearVertical.getText()) / 100.0f);
+                drawingPanel.shearImage(Float.valueOf(shearHorizontal.getText()) / 100.0f,
+                        Float.valueOf(shearVertical.getText()) / 100.0f);
             } else if (!shearHorizontal.getText().isEmpty() && shearVertical.getText().isEmpty()) {
-                drawingPanel.shearImage(Float.parseFloat(shearHorizontal.getText()) / 100.0f, 0);
+                drawingPanel.shearImage(Float.valueOf(shearHorizontal.getText()) / 100.0f, 0);
             } else if (shearHorizontal.getText().isEmpty() && !shearVertical.getText().isEmpty()) {
-                drawingPanel.shearImage(0, Float.parseFloat(shearVertical.getText()) / 100.0f);
+                drawingPanel.shearImage(0, Float.valueOf(shearVertical.getText()) / 100.0f);
             } else {
                 drawingPanel.shearImage(0, 0);
             }
@@ -163,9 +168,9 @@ public class ModifiedPhoto {
     }
 
     public void createScaleAmountOptionPane() {
-        String scaleAmount = JOptionPane.showInputDialog(window, "Enter scale amount:", "Scale Image",
+        scaleAmount = JOptionPane.showInputDialog(window, "Enter scale amount:", "Scale Image",
                 JOptionPane.PLAIN_MESSAGE);
-        drawingPanel.scaleImage(Float.valueOf(scaleAmount));
+        drawingPanel.scaleImage(Float.valueOf(scaleAmount) / 100.0f);
     }
 
     // creates panel with buttons to shift the image when clicked
