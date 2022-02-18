@@ -22,6 +22,8 @@ public class ModifiedPhoto {
 
         groupPanel.add(createShiftPanel()); // create shift panel
 
+        window.setJMenuBar(createMenuBar()); // create menu bar
+
         window.setContentPane(topPanel);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(800, 600);
@@ -93,6 +95,27 @@ public class ModifiedPhoto {
         });
 
         return buttonPanel;
+    }
+
+    public JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu menuFile = new JMenu("File");
+        menuBar.add(menuFile); // add a menu called File to menuBar
+        JMenu menuFileItem = new JMenu("Open Image");
+        menuFile.add(menuFileItem); // add an item called Open Image to File menu
+
+        JMenu menuImage = new JMenu("Image");
+        menuBar.add(menuImage); // add a menu called Image to menuBar
+        JMenu menuImageRotate = new JMenu("Rotate");
+        menuImage.add(menuImageRotate); // add an item called Rotate to Image menu
+        JMenu menuImageShear = new JMenu("Shear");
+        menuImage.add(menuImageShear); // add an item called Shear to Image menu
+        JMenu menuImageScale = new JMenu("Scale");
+        menuImage.add(menuImageScale); // add an item called Scale to Image menu
+
+        menuBar.setBackground(Color.lightGray);
+        return menuBar;
     }
 
     public static void main(String[] args) {
