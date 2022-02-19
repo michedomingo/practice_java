@@ -48,8 +48,8 @@ public class ModifiedPhoto {
         // add borders & backgrounds
         groupPanel.setLayout(new BoxLayout(groupPanel, BoxLayout.X_AXIS)); // add components to a single row
         groupPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-        groupPanel.setBackground(Color.red);
-        topPanel.setBackground(Color.blue);
+        groupPanel.setBackground(Color.gray);
+        topPanel.setBackground(Color.gray);
         topPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED),
                 BorderFactory.createEtchedBorder(EtchedBorder.LOWERED)));
     }
@@ -170,17 +170,9 @@ public class ModifiedPhoto {
         scaleAmount = JOptionPane.showInputDialog(window, "Enter scale amount:", "Scale Image",
                 JOptionPane.PLAIN_MESSAGE);
         if (!scaleAmount.isEmpty()) {
-            System.out.println("scaleAmount.equals(\"0\"):" + scaleAmount.equals("0"));
             drawingPanel.scaleImage(Float.valueOf(scaleAmount) / 100.0f);
         } else {
-            // else if (scaleAmount.equals("0")) {
-            // } else if (scaleAmount.isEmpty() || scaleAmount.equals("0")) {
-            // drawingPanel.scaleImage(Float.valueOf(scaleAmount) / 100.0f);
             drawingPanel.scaleImage(1.0f);
-            // System.out.println("scaleAmount.equals(\"0\"):" + scaleAmount.equals("0"));
-            // System.out.println("scaleAmount: " + scaleAmount);
-            // System.out.println("scaleAmount.isEmpty(): " + scaleAmount.isEmpty());
-            // System.out.println("scaleAmount.getClass(): " + scaleAmount.getClass());
         }
     }
 
