@@ -6,45 +6,52 @@ import java.util.Scanner;
 public class Thermometer implements Serializable {
     private String type; // type = mercury or digital
     private int temperature;
-
-    public Thermometer(String typeInput, int tempInput) {
-        type = typeInput;
-        temperature = tempInput;
-    }
+    private static Scanner scan;
 
     public Thermometer() {
     }
 
-    public void getType() {
+    public Thermometer(String inputType, int inputTemperature) {
+        type = inputType;
+        temperature = inputTemperature;
+    }
+
+    public static String getInputType() {
+        System.out.println("Enter type - mercury or digital: ");
+        scan = new Scanner(System.in);
+        String inputType = scan.next();
+        return inputType;
+    }
+
+    public static int getInputTemperature() {
+        System.out.println("Enter temperature: ");
+        int inputTemp = scan.nextInt();
+        return inputTemp;
+    }
+
+    public void displayType() {
         System.out.println("type: " + type);
     }
 
-    public void getTemp() {
+    public void displayTemperature() {
         System.out.println("temperature: " + temperature);
     }
 
     public static void main(String[] args) {
-        System.out.println("Enter type - mercury or digital: ");
-        Scanner s1 = new Scanner(System.in);
-        String inputType = s1.next();
-        System.out.println("Enter temperature: ");
-        Scanner s2 = new Scanner(System.in);
-        int inputTemp = s2.nextInt();
-
         try {
-            Thermometer data1 = new Thermometer(inputType, inputTemp);
+            Thermometer data1 = new Thermometer(getInputType(), getInputTemperature());
             FileOutputStream fileOut = new FileOutputStream("thermometer.dat");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
             objectOut.writeObject(data1);
             objectOut.close();
 
-            Thermometer data2 = new Thermometer();
+            Thermometer data2 = new Thermometer(null, 0);
             FileInputStream fileIn = new FileInputStream("thermometer.dat");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             data2 = (Thermometer) objectIn.readObject();
             objectIn.close();
-            data2.getType();
-            data2.getTemp();
+            data2.displayType();
+            data2.displayTemperature();
         } catch (Exception e) {
             e.printStackTrace();
         }
