@@ -29,6 +29,14 @@ public class Thermometer implements Serializable {
         return inputTemp;
     }
 
+    public String getThermometerType() {
+        return this.type;
+    }
+
+    public int getThermometerTemperature() {
+        return this.temperature;
+    }
+
     public void displayType() {
         System.out.println("type: " + type);
     }

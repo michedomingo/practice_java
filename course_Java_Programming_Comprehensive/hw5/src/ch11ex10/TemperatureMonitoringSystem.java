@@ -10,14 +10,14 @@ public class TemperatureMonitoringSystem extends Thermometer {
     // save object's state as binary stream (sequence of bytes)
     public void serializeThermometer() {
         t1 = new Thermometer(getInputType(), getInputTemperature());
-        System.out.println("Inside SErializeThermometer()...");
-        t1.displayType();
-        t1.displayTemperature();
+
+        // System.out.println("Inside SErializeThermometer()...");
+        // t1.displayType();
+        // t1.displayTemperature();
 
         try (FileOutputStream fileOut = new FileOutputStream("thermometer.dat");
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(t1);
-
         } catch (FileNotFoundException e) {
             System.err.println("File could not be found" + e.getMessage());
         } catch (IOException e) {
@@ -32,9 +32,11 @@ public class TemperatureMonitoringSystem extends Thermometer {
         try (FileInputStream fileIn = new FileInputStream("thermometer.dat");
                 ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
             t2 = (Thermometer) objectIn.readObject();
-            System.out.println("Inside deserializeThermometer()...");
-            t2.displayType();
-            t2.displayTemperature();
+
+            // System.out.println("Inside deserializeThermometer()...");
+            // t2.displayType();
+            // t2.displayTemperature();
+
         } catch (FileNotFoundException e) {
             System.err.println("File could not be found" + e.getMessage());
         } catch (IOException e) {
@@ -44,9 +46,17 @@ public class TemperatureMonitoringSystem extends Thermometer {
         }
     }
 
-    public void thermometersAreSerialized() {
-        System.out.println("Thermometer 1: " + t1);
-        System.out.println("Thermometer 2: " + t2);
+    public boolean sameThermometerData(Thermometer inputT1, Thermometer inputT2) {
+        String t1InputType = inputT1.getThermometerType();
+        String t2InputType = inputT2.getThermometerType();
+        int t1InputTemp = inputT1.getThermometerTemperature();
+        int t2InputTemp = inputT2.getThermometerTemperature();
+
+        if (t1InputType.equals(t2InputType) &&
+                t1InputTemp == t2InputTemp)
+            return true;
+        else
+            return false;
     }
 
     public static void main(String[] args) {
@@ -56,6 +66,8 @@ public class TemperatureMonitoringSystem extends Thermometer {
         temperatureMonitor.deserializeThermometer();
         temperatureMonitor.t2.displayType();
         temperatureMonitor.t2.displayTemperature();
+
+        System.out.println(temperatureMonitor.sameThermometerData(temperatureMonitor.t1, temperatureMonitor.t2));
 
     }
 }
