@@ -45,24 +45,49 @@ public class Thermometer implements Serializable {
         System.out.println("temperature: " + temperature);
     }
 
-    public static void main(String[] args) {
-        try {
-            Thermometer data1 = new Thermometer(getInputType(), getInputTemperature());
-            FileOutputStream fileOut = new FileOutputStream("thermometer.dat");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(data1);
-            objectOut.close();
+    // save object's state as binary stream (sequence of bytes)
+    public Thermometer serializeThermometer() {
+        Thermometer thermometerToSerialize = new Thermometer(getInputType(), getInputTemperature());
 
-            Thermometer data2 = new Thermometer(null, 0);
-            FileInputStream fileIn = new FileInputStream("thermometer.dat");
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            data2 = (Thermometer) objectIn.readObject();
-            objectIn.close();
-            data2.displayType();
-            data2.displayTemperature();
-        } catch (Exception e) {
-            e.printStackTrace();
+        try (FileOutputStream fileOut = new FileOutputStream("thermometer.dat");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(thermometerToSerialize);
+        } catch (FileNotFoundException e) {
+            System.err.println("File could not be found" + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("IOException" + e.getMessage());
         }
+        return thermometerToSerialize;
+    }
+
+    // reverse process/restore object back from binary data
+    public Thermometer deserializeThermometer() {
+        Thermometer thermometerToDeserialize = new Thermometer(null, 0);
+
+        try (FileInputStream fileIn = new FileInputStream("thermometer.dat");
+                ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            thermometerToDeserialize = (Thermometer) objectIn.readObject();
+
+        } catch (FileNotFoundException e) {
+            System.err.println("File could not be found" + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("IOException" + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println("ClassNotFoundException" + e.getMessage());
+        }
+        return thermometerToDeserialize;
+    }
+
+    public static void main(String[] args) {
+        Thermometer data1 = new Thermometer().serializeThermometer();
+        System.out.println("data1.getThermometerType(): " + data1.getThermometerType());
+        System.out.println("data1.getThermometerTemperature(): " +
+                data1.getThermometerTemperature());
+
+        Thermometer data2 = new Thermometer().deserializeThermometer();
+        System.out.println("data2.getThermometerType(): " + data2.getThermometerType());
+        System.out.println("data2.getThermometerTemperature(): " +
+                data2.getThermometerTemperature());
     }
 }
 
