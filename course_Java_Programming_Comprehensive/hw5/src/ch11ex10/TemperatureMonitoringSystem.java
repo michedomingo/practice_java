@@ -4,67 +4,30 @@ import ch11ex9.Thermometer;
 import java.io.*;
 
 public class TemperatureMonitoringSystem extends Thermometer {
-    Thermometer serializeT1;
-    Thermometer serializeT2;
-    // Thermometer deserializeT1;
-    // Thermometer deserializeT2;
+    private Thermometer thermometer1;
+    private Thermometer thermometer2;
 
-    // public TemperatureMonitoringSystem() {
-
-    // }
-
-    public TemperatureMonitoringSystem() {
-        serializeT1 = new Thermometer().serializeThermometer();
-        serializeT2 = new Thermometer().serializeThermometer();
+    public TemperatureMonitoringSystem(Thermometer t1, Thermometer t2) {
+        thermometer1 = t1;
+        thermometer2 = t2;
     }
 
-    public TemperatureMonitoringSystem serializeSystem() {
-        TemperatureMonitoringSystem system = new TemperatureMonitoringSystem();
-        // serializeT1 = new Thermometer().serializeThermometer();
-        // serializeT2 = new Thermometer().serializeThermometer();
-
-        try (FileOutputStream fileOut = new FileOutputStream("tempMonitor.dat");
+    public TemperatureMonitoringSystem serializeSystem(TemperatureMonitoringSystem obj) {
+        try (FileOutputStream fileOut = new FileOutputStream("temperatureMonitor.dat");
                 ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-            objectOut.writeObject(system);
-
-            System.out.println("Inside serializeSystem()...");
-            System.out.println("\tserializeT1.getThermometerType(): " + serializeT1.getThermometerType());
-            System.out.println("\tserializeT1.getThermometerTemperature(): " +
-                    serializeT1.getThermometerTemperature());
-            System.out.println("\tserializeT2.getThermometerType(): " + serializeT2.getThermometerType());
-            System.out.println("\tserializeT2.getThermometerTemperature(): " +
-                    serializeT2.getThermometerTemperature());
-
+            objectOut.writeObject(obj);
         } catch (FileNotFoundException e) {
             System.err.println("File could not be found" + e.getMessage());
         } catch (IOException e) {
             System.err.println("IOException" + e.getMessage());
         }
-        return system;
+        return obj;
     }
 
-    public TemperatureMonitoringSystem deserializeSystem() {
-        TemperatureMonitoringSystem system = new TemperatureMonitoringSystem();
-        Thermometer deserializeT1 = deserializeThermometer();
-        Thermometer deserializeT2 = deserializeThermometer();
-        // deserializeT1 = deserializeThermometer();
-        // deserializeT2 = deserializeThermometer();
-        // system.deserializeThermometersInSystem();
-
-        try (FileInputStream fileIn = new FileInputStream("tempMonitor.dat");
+    public TemperatureMonitoringSystem deserializeSystem(TemperatureMonitoringSystem obj) {
+        try (FileInputStream fileIn = new FileInputStream("temperatureMonitor.dat");
                 ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
-            system = (TemperatureMonitoringSystem) objectIn.readObject();
-
-            System.out.println("Inside DEserializeSystem()...");
-            System.out.println("\tdeserializeT1.getThermometerType(): " +
-                    deserializeT1.getThermometerType());
-            System.out.println("\tdeserializeT1.getThermometerTemperature(): " +
-                    deserializeT1.getThermometerTemperature());
-            System.out.println("\tdeserializeT2.getThermometerType(): " +
-                    deserializeT2.getThermometerType());
-            System.out.println("\tdeserializeT2.getThermometerTemperature(): " +
-                    deserializeT2.getThermometerTemperature());
-
+            obj = (TemperatureMonitoringSystem) objectIn.readObject();
         } catch (FileNotFoundException e) {
             System.err.println("File could not be found" + e.getMessage());
         } catch (IOException e) {
@@ -72,10 +35,10 @@ public class TemperatureMonitoringSystem extends Thermometer {
         } catch (ClassNotFoundException e) {
             System.err.println("ClassNotFoundException" + e.getMessage());
         }
-        return system;
+        return obj;
     }
 
-    public boolean sameThermometerData(Thermometer inputOne, Thermometer inputTwo) {
+    public boolean verifyThermometerInstances(Thermometer inputOne, Thermometer inputTwo) {
         String inputOneType = inputOne.getThermometerType();
         String inputTwoType = inputTwo.getThermometerType();
         int inputOneTemp = inputOne.getThermometerTemperature();
@@ -89,31 +52,22 @@ public class TemperatureMonitoringSystem extends Thermometer {
     }
 
     public static void main(String[] args) {
-        TemperatureMonitoringSystem temperatureMonitor = new TemperatureMonitoringSystem();
-        // TemperatureMonitoringSystem temperatureMonitor = new
-        // TemperatureMonitoringSystem().serializeSystem();
-        // TemperatureMonitoringSystem temperatureMonitor2 = new
-        // TemperatureMonitoringSystem();
-
-        // temperatureMonitor.serializeSystem();
-        // temperatureMonitor2.deserializeSystem();
-        System.out.println("\ttemperatureMonitor.serializeT1.getThermometerType(): "
-                + temperatureMonitor.serializeT1.getThermometerType());
-        System.out.println("\ttemperatureMonitor.serializeT1.getThermometerTemperature():"
-                + temperatureMonitor.serializeT1.getThermometerTemperature());
-        System.out.println("\ttemperatureMonitor.serializeT2.getThermometerType(): "
-                + temperatureMonitor.serializeT2.getThermometerType());
-        System.out.println("\ttemperatureMonitor.serializeT2.getThermometerTemperature(): " +
-                temperatureMonitor.serializeT2.getThermometerTemperature());
-
-        // System.out.println(
-        // "T1 sameThermometerData(): " +
-        // temperatureMonitor.sameThermometerData(temperatureMonitor.serializeT1,
-        // temperatureMonitor.deserializeT1));
-        // System.out.println(
-        // "T2 sameThermometerData(): " +
-        // temperatureMonitor.sameThermometerData(temperatureMonitor.serializeT2,
-        // temperatureMonitor.deserializeT2));
+        TemperatureMonitoringSystem temperatureMonitor = new TemperatureMonitoringSystem(
+                new Thermometer(getInputType(), getInputTemperature()),
+                new Thermometer(getInputType(), getInputTemperature()));
+        temperatureMonitor = temperatureMonitor.serializeSystem(temperatureMonitor);
+        TemperatureMonitoringSystem temperatureMonitor2 = new TemperatureMonitoringSystem(new Thermometer(null, 0),
+                new Thermometer(null, 0));
+        temperatureMonitor2 = temperatureMonitor2.deserializeSystem(temperatureMonitor2);
+        System.out.println();
+        System.out.println(
+                "thermometer1 - verifyThermometerInstances(): " +
+                        temperatureMonitor.verifyThermometerInstances(temperatureMonitor.thermometer1,
+                                temperatureMonitor2.thermometer1));
+        System.out.println(
+                "thermometer2 - verifyThermometerInstances(): " +
+                        temperatureMonitor.verifyThermometerInstances(temperatureMonitor.thermometer2,
+                                temperatureMonitor2.thermometer2));
 
     }
 }
