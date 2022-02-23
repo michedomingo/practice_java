@@ -3,7 +3,7 @@ package ch11ex10;
 import ch11ex9.Thermometer;
 import java.io.*;
 
-public class TemperatureMonitoringSystem extends Thermometer {
+public class TemperatureMonitoringSystem implements Serializable {
     private Thermometer thermometer1;
     private Thermometer thermometer2;
 
@@ -53,8 +53,8 @@ public class TemperatureMonitoringSystem extends Thermometer {
 
     public static void main(String[] args) {
         TemperatureMonitoringSystem temperatureMonitor = new TemperatureMonitoringSystem(
-                new Thermometer(getInputType(), getInputTemperature()),
-                new Thermometer(getInputType(), getInputTemperature()));
+                new Thermometer(Thermometer.getInputType(), Thermometer.getInputTemperature()),
+                new Thermometer(Thermometer.getInputType(), Thermometer.getInputTemperature()));
         temperatureMonitor = temperatureMonitor.serializeSystem(temperatureMonitor);
         TemperatureMonitoringSystem temperatureMonitor2 = new TemperatureMonitoringSystem(new Thermometer(null, 0),
                 new Thermometer(null, 0));
