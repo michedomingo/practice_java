@@ -68,7 +68,6 @@ public class TemperatureMonitoringSystem implements Serializable {
                 "thermometer2 - verifyThermometerInstances(): " +
                         temperatureMonitor.verifyThermometerInstances(temperatureMonitor.thermometer2,
                                 temperatureMonitor2.thermometer2));
-
     }
 }
 
