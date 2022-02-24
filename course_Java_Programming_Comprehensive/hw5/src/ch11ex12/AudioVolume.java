@@ -42,7 +42,8 @@ public class AudioVolume {
                 totalBytesRead += numBytesRead;
 
                 for (int i = 0; i < numBytesRead - 1; i++) {
-                    // mutiply WAV file samples up or down by floating-point arg scale within
+                    // mutiply WAV file samples up or down by floating-point arg scale
+                    // within value from 0 to 256 range for 8-bit audio
                     buffer[i] = (byte) (scale * (buffer[i] < 0 ? 256 + (int) buffer[i] : buffer[i]));
                 }
                 fileOut.write(buffer, 0, numBytesRead); // write buffer to destination
